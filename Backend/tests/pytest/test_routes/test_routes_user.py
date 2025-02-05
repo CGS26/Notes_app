@@ -7,7 +7,7 @@ async def test_register_user(setup_db: TestClient, user_dao):
     """Test registering a new user."""
     user_data = UserCreateDTO(username="testuser", password="testpassword", full_name="Test User")
 
-    response = setup_db.post("/register/", json=user_data.dict())
+    response = setup_db.post("/register/", json=user_data.model_dump())
 
     assert response.status_code == 200
     assert response.json() == {"message": "User created successfully"}
@@ -24,7 +24,7 @@ async def test_register_duplicate_user(setup_db: TestClient, user_dao):
     user_data = UserCreateDTO(username="testuser", password="testpassword", full_name="Test User")
     await user_dao.create_user(user_data.username, user_data.password, user_data.full_name)
 
-    response = setup_db.post("/register/", json=user_data.dict())
+    response = setup_db.post("/register/", json=user_data.model_dump())
 
     assert response.status_code == 500
     # assert response.json() == {"detail": "User already exists"}

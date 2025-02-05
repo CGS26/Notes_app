@@ -4,10 +4,10 @@ from fastapi import status
 from schemas.user import UserCreateDTO, RefreshTokenDTO
 from schemas.note import NoteCreateDTO
 
-BASE_URL = "http://192.168.0.193:8000"
+BASE_URL = "http://192.168.0.132:8000"
 
 TEST_USER = {
-    "username": "testuser2",
+    "username": "Sampletest",
     "password": "testpassword",
     "full_name": "Test User"
 }
@@ -20,7 +20,7 @@ async def register_user():
     async with httpx.AsyncClient(base_url=BASE_URL) as client:
         response = await client.post(
             "/register/",
-            json=UserCreateDTO(**TEST_USER).dict()
+            json=UserCreateDTO(**TEST_USER).model_dump()
         )
         assert response.status_code == status.HTTP_200_OK, f"Failed to register user, got {response.status_code}"
         assert response.json() == {"message": "User created successfully"}, f"Unexpected response: {response.json()}"
@@ -44,7 +44,7 @@ async def refresh_access_token(refresh_token):
     async with httpx.AsyncClient(base_url=BASE_URL) as client:
         response = await client.post(
             "/refresh/",
-            json=RefreshTokenDTO(refresh_token=refresh_token).dict()
+            json=RefreshTokenDTO(refresh_token=refresh_token).model_dump()
         )
         assert response.status_code == status.HTTP_200_OK, f"Failed to refresh token, got {response.status_code}"
         new_tokens = response.json()
@@ -56,7 +56,7 @@ async def create_note(client, access_token):
     print("\nTesting Create Note...")
     response = await client.post(
         "/note/",
-        json=NoteCreateDTO(title="Test Note", body="This is a test note.").dict(),
+        json=NoteCreateDTO(title="Test Note", body="This is a test note.").model_dump(),
         headers=get_headers(access_token)
     )
     assert response.status_code == status.HTTP_200_OK, f"Failed to create note, got {response.status_code}"
@@ -86,7 +86,7 @@ async def update_note(client, access_token, note_id):
     print("\nTesting Update Note...")
     response = await client.put(
         f"/note/{note_id}",
-        json=NoteCreateDTO(title="Updated Title", body="Updated body.").dict(),
+        json=NoteCreateDTO(title="Updated Title", body="Updated body.").model_dump(),
         headers=get_headers(access_token)
     )
     assert response.status_code == status.HTTP_200_OK, f"Failed to update note, got {response.status_code}"

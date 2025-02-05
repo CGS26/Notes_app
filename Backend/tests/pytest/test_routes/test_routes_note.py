@@ -9,7 +9,7 @@ async def test_create_note(setup_db: TestClient, authenticated_user, note_dao):
 
     response = setup_db.post(
         "/note/",
-        json=note_data.dict(),
+        json=note_data.model_dump(),
         headers={"Authorization": f"Bearer {authenticated_user['access_token']}"}
     )
 
@@ -68,7 +68,7 @@ async def test_update_note(setup_db: TestClient, authenticated_user, note_dao):
 
     response = setup_db.put(
         f"/note/{note.note_id}",
-        json=updated_note_data.dict(),
+        json=updated_note_data.model_dump(),
         headers={"Authorization": f"Bearer {authenticated_user['access_token']}"}
     )
 
