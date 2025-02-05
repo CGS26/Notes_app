@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from passlib.context import CryptContext
 import jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import os
 from fastapi import Depends, HTTPException, status
 
@@ -67,7 +67,7 @@ class UserDAO:
         """Generates a JWT access token"""
         try:
             to_encode = data.copy()
-            expire = datetime.utcnow() + expires_delta
+            expire = datetime.now(timezone.utc) + expires_delta
             to_encode.update({"exp": expire})
             return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
         except jwt.PyJWTError as e:
@@ -83,7 +83,7 @@ class UserDAO:
     def create_refresh_token(self, data: dict, expires_delta: timedelta = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)):
         """Generate a refresh token"""
         to_encode = data.copy()
-        expire = datetime.utcnow() + expires_delta
+        expire = datetime.now(timezone.utc) + expires_delta
         to_encode.update({"exp": expire})
         return jwt.encode(to_encode, REFRESH_SECRET_KEY, algorithm=ALGORITHM)
     

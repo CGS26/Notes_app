@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 import uvicorn;
 from fastapi import FastAPI, HTTPException;
 from fastapi.middleware.cors import CORSMiddleware;
@@ -22,9 +23,14 @@ app.add_middleware(
      allow_headers=['*']
 
 )
-@app.on_event("startup")
-async def start_up_event():
+# @app.on_event("startup")
+# async def start_up_event():
+#     await create_table()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     await create_table()
+
 
 app.include_router(note.router,tags=["notes"])
 app.include_router(user.router,tags=["User"])
