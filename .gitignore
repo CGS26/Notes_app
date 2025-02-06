@@ -3,3 +3,5 @@
 .vscode/
 **/__pycache__/
 Backend/Notes.db
+frontend/node_modules/
+frontend/.gitignore

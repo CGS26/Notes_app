@@ -23,7 +23,7 @@ async def create_note(client, access_token):
     print("\nTesting Create Note...")
     response = await client.post(
         "/note/",
-        json=NoteCreateDTO(title="Test Note", body="This is a test note.").dict(),
+        json=NoteCreateDTO(title="Test Note", body="This is a test note.").model_dump(),
         headers=get_headers(access_token)
     )
     assert response.status_code == status.HTTP_200_OK, f"Failed to create note, got {response.status_code}"
@@ -53,7 +53,7 @@ async def update_note(client, access_token, note_id):
     print("\nTesting Update Note...")
     response = await client.put(
         f"/note/{note_id}",
-        json=NoteCreateDTO(title="Updated Title", body="Updated body.").dict(),
+        json=NoteCreateDTO(title="Updated Title", body="Updated body.").model_dump(),
         headers=get_headers(access_token)
     )
     assert response.status_code == status.HTTP_200_OK, f"Failed to update note, got {response.status_code}"

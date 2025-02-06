@@ -16,7 +16,7 @@ async def register_user():
     async with httpx.AsyncClient(base_url=BASE_URL) as client:
         response = await client.post(
             "/register/",
-            json=UserCreateDTO(**TEST_USER).dict()
+            json=UserCreateDTO(**TEST_USER).model_dump()
         )
         assert response.status_code == status.HTTP_200_OK, f"Failed to register user, got {response.status_code}"
         assert response.json() == {"message": "User created successfully"}, f"Unexpected response: {response.json()}"
@@ -40,7 +40,7 @@ async def refresh_access_token(refresh_token):
     async with httpx.AsyncClient(base_url=BASE_URL) as client:
         response = await client.post(
             "/refresh/",
-            json=RefreshTokenDTO(refresh_token=refresh_token).dict()
+            json=RefreshTokenDTO(refresh_token=refresh_token).model_dump()
         )
         assert response.status_code == status.HTTP_200_OK, f"Failed to refresh token, got {response.status_code}"
         new_tokens = response.json()
