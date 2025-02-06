@@ -3,7 +3,7 @@ import httpx
 from fastapi import status
 from schemas.user import UserCreateDTO, RefreshTokenDTO
 
-BASE_URL = "http://192.168.0.193:8000"
+BASE_URL = "http://192.168.0.132:8000"
 
 TEST_USER = {
     "username": "testuser34",

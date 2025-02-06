@@ -4,10 +4,10 @@ from fastapi import status
 from schemas.user import UserCreateDTO, RefreshTokenDTO
 from schemas.note import NoteCreateDTO
 
-BASE_URL = "http://192.168.0.193:8000"
+BASE_URL = "http://192.168.0.132:8000"
 
 TEST_USER = {
-    "username": "testuser2",
+    "username": "testuser25891234",
     "password": "testpassword",
     "full_name": "Test User"
 }
