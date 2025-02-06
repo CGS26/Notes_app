@@ -27,7 +27,6 @@ async def test_register_duplicate_user(setup_db: TestClient, user_dao):
     response = setup_db.post("/register/", json=user_data.model_dump())
 
     assert response.status_code == 500
-    # assert response.json() == {"detail": "User already exists"}
 
 
 @pytest.mark.asyncio
@@ -58,7 +57,6 @@ async def test_invalid_token_credentials(setup_db: TestClient):
     )
 
     assert response.status_code == 500
-    # assert response.json() == {"detail": "Invalid username or password"}
 
 
 @pytest.mark.asyncio

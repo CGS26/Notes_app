@@ -15,10 +15,8 @@ async def test_create_user(user_dao: UserDAO):
 @pytest.mark.asyncio
 async def test_get_user_by_username(user_dao: UserDAO):
     """Test retrieving a user by username."""
-    # Create a user first
     await user_dao.create_user(username="testuser", password="testpassword", full_name="Test User")
 
-    # Retrieve the user
     user = await user_dao.get_user_by_username("testuser")
     assert user is not None
     assert user.username == "testuser"

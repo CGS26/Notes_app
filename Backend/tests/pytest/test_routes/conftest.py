@@ -51,10 +51,9 @@ async def note_dao(override_get_db):
 @pytest_asyncio.fixture
 async def authenticated_user(setup_db, user_dao):
     """Fixture to create an authenticated user and generate an access token."""
-    # Create a user
+
     user = await user_dao.create_user(username="testuser", password="testpassword", full_name="Test User")
     assert user is not None
 
-    # Generate an access token
     token = user_dao.create_access_token(data={"sub": user.username})
     return {"user": user, "access_token": token}

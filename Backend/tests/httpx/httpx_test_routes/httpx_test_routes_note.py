@@ -6,7 +6,7 @@ from schemas.note import NoteCreateDTO
 
 from httpx_test_routes_user import login_and_get_tokens,register_user,refresh_access_token
 
-BASE_URL = "http://192.168.0.193:8000"
+BASE_URL = "http://192.168.0.132:8000"
 
 TEST_USER = {
     "username": "testuser2",
